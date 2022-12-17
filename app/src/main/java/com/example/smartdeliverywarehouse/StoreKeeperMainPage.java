@@ -14,5 +14,15 @@ public class StoreKeeperMainPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_keeper_main_page);
 
+        Button buttonHomepage = findViewById(R.id.buttonHomepage);
+
+        buttonHomepage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(StoreKeeperMainPage.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
