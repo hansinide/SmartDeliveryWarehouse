@@ -7,12 +7,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity  {
+import io.realm.Realm;
+import io.realm.mongodb.App;
+import io.realm.mongodb.AppConfiguration;
 
+public class MainActivity extends AppCompatActivity  {
+    String Appid = "smartdeliverywarehouse-uuday";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Realm.init(this);
+        App app = new App(new AppConfiguration.Builder(Appid).build());
 
         Button button=findViewById(R.id.button1);
         button.setOnClickListener(new View.OnClickListener() {
