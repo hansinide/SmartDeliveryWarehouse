@@ -13,6 +13,20 @@
         android:theme="@style/Theme.SmartDeliveryWarehouse"
         tools:targetApi="31">
         <activity
+            android:name=".customerpageSingup"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".customerMainPage"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".RiderMainPage"
             android:exported="false">
             <meta-data

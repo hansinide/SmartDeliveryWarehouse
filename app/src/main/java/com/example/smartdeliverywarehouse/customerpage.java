@@ -23,6 +23,23 @@ public class customerpage extends AppCompatActivity {
             }
         });
 
+        Button button4=findViewById(R.id.customerLogin);
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(customerpage.this,customerMainPage.class);
+                startActivity(intent);
+            }
+        });
+
+        Button button10 = findViewById(R.id.singUp);
+        button10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(customerpage.this,customerpageSingup.class);
+                startActivity(intent);
+            }
+        });
             }
         }
 
