@@ -12,12 +12,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.smartdeliverywarehouse.Model.User;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 
 public class customerpage extends AppCompatActivity {
@@ -27,51 +27,41 @@ public class customerpage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        editTextTextPhoneNumber= (EditText) findViewById(R.id.userPhoneNumber);
-        editTextTextPassword= (EditText) findViewById(R.id.editPassword);
-
-        FirebaseDatabase database= FirebaseDatabase.getInstance();
-        DatabaseReference table_user= database.getReference("User");
-        FirebaseAuth mAuth;
-
-
         setContentView(R.layout.activity_customerpage);
-        Button button5=findViewById(R.id.button5);
-        button5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent= new Intent(customerpage.this,MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        Button button4=findViewById(R.id.customerLogin);
-        button4.setOnClickListener(new View.OnClickListener() {
+        editTextTextPhoneNumber=(MaterialEditText)findViewById(R.id.userPhoneNumber);
+        editTextTextPassword= (MaterialEditText)findViewById(R.id.editPassword);
+
+        final FirebaseDatabase database= FirebaseDatabase.getInstance();
+        final DatabaseReference table_user= database.getReference("User");
+
+        Button cLogin=findViewById(R.id.customerLogin);
+        cLogin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                ProgressDialog mDialog= new ProgressDialog(customerpage.this);
+                final ProgressDialog mDialog= new ProgressDialog(customerpage.this);
                 mDialog.setMessage("Please wait");
                 mDialog.show();
 
                 table_user.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                public void onDataChange(DataSnapshot snapshot) {
                     if (snapshot.child(editTextTextPhoneNumber.getText().toString()).exists()) {
                         mDialog.dismiss();
-
                         User user = snapshot.child(editTextTextPhoneNumber.getText().toString()).getValue(User.class);
                         if (user.getPassword().equals(editTextTextPassword.getText().toString())) {
                             Toast.makeText(customerpage.this, "Sing In Success", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(customerpage.this, customerMainPage.class);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(customerpage.this, "Sing In Fail!!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(customerpage.this, "Wrong Password!!", Toast.LENGTH_SHORT).show();
                         }
-                    } else
-                    {
-                        Toast.makeText(customerpage.this, "User not exit in the System", Toast.LENGTH_SHORT).show();
                     }
-
+                    else
+                    {
+                        mDialog.dismiss();
+                        Toast.makeText(customerpage.this, "User Not Available !!!", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override
@@ -80,7 +70,15 @@ public class customerpage extends AppCompatActivity {
                 }
             });
 
+            }
+        });
 
+        Button button5=findViewById(R.id.button5);
+        button5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(customerpage.this,MainActivity.class);
+                startActivity(intent);
             }
         });
 
