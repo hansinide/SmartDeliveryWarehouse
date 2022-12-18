@@ -32,14 +32,14 @@ public class customerpage extends AppCompatActivity {
         editTextTextPhoneNumber=(MaterialEditText)findViewById(R.id.userPhoneNumber);
         editTextTextPassword= (MaterialEditText)findViewById(R.id.editPassword);
 
-        FirebaseDatabase database= FirebaseDatabase.getInstance();
-        DatabaseReference table_user= database.getReference("User");
+        final FirebaseDatabase database= FirebaseDatabase.getInstance();
+        final DatabaseReference table_user= database.getReference("User");
 
         Button cLogin=findViewById(R.id.customerLogin);
         cLogin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                ProgressDialog mDialog= new ProgressDialog(customerpage.this);
+                final ProgressDialog mDialog= new ProgressDialog(customerpage.this);
                 mDialog.setMessage("Please wait");
                 mDialog.show();
 
