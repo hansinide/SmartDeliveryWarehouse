@@ -32,8 +32,6 @@ public class customerpage extends AppCompatActivity {
 
         FirebaseDatabase database= FirebaseDatabase.getInstance();
         DatabaseReference table_user= database.getReference("User");
-        FirebaseAuth mAuth;
-
 
         setContentView(R.layout.activity_customerpage);
         Button button5=findViewById(R.id.button5);
@@ -60,11 +58,14 @@ public class customerpage extends AppCompatActivity {
                         mDialog.dismiss();
 
                         User user = snapshot.child(editTextTextPhoneNumber.getText().toString()).getValue(User.class);
-                        if (user.getPassword().equals(editTextTextPassword.getText().toString())) {
+                        if (user.getPassword().equals(editTextTextPassword.getText().toString()))
+                        {
                             Toast.makeText(customerpage.this, "Sing In Success", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(customerpage.this, customerMainPage.class);
                             startActivity(intent);
-                        } else {
+                        }
+                        else
+                        {
                             Toast.makeText(customerpage.this, "Sing In Fail!!", Toast.LENGTH_SHORT).show();
                         }
                     } else
