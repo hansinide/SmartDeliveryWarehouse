@@ -1,10 +1,11 @@
 package com.example.smartdeliverywarehouse;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.Button;
+
+import com.example.smartdeliverywarehouse.Model.User;
 
 public class customerpageSingup extends AppCompatActivity {
 
