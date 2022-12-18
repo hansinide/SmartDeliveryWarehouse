@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1084820202266",
+    "project_id": "smart-delivery-warehouse",
+    "storage_bucket": "smart-delivery-warehouse.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1084820202266:android:1785a32b5e0943f61882a3",
+        "android_client_info": {
+          "package_name": "com.example.smartdeliverywarehouse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1084820202266-n5ieoofcaq4ck9nsg1tjc63c4p4v3363.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smartdeliverywarehouse",
+            "certificate_hash": "dbde3bc4b59259ed3965556bd26e5436152ed4c0"
+          }
+        },
+        {
+          "client_id": "1084820202266-f1c6j9u5ebgmo8r2n9m1dkcbreruik6i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeB1ht49vSW0g4Lgok4MMG85-k7i64YYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1084820202266-f1c6j9u5ebgmo8r2n9m1dkcbreruik6i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

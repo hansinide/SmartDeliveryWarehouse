@@ -20,6 +20,7 @@ public class storeKeeperPage extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent= new Intent(storeKeeperPage.this,MainActivity.class);
                 startActivity(intent);
+
             }
         });
         Button button4=findViewById(R.id.loginButton);
