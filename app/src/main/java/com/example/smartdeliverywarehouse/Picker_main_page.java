@@ -7,26 +7,28 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class pickerPage extends AppCompatActivity {
+public class Picker_main_page extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_picker_page);
+        setContentView(R.layout.activity_picker_main_page);
 
-        Button button7=findViewById(R.id.storkeeperhp2);
-        button7.setOnClickListener(new View.OnClickListener() {
+        Button viewOrder = findViewById(R.id.buttonViewOrder);
+
+        viewOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(pickerPage.this,MainActivity.class);
+                Intent intent= new Intent(Picker_main_page.this,View_order.class);
                 startActivity(intent);
             }
         });
-        Button button4=findViewById(R.id.buttonPickerLogin);
-        button4.setOnClickListener(new View.OnClickListener() {
+        Button buttonHome = findViewById(R.id.BtnHomePage);
+
+        buttonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(pickerPage.this,Picker_main_page.class);
+                Intent intent= new Intent(Picker_main_page.this,MainActivity.class);
                 startActivity(intent);
             }
         });
