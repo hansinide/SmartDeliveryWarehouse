@@ -45,26 +45,23 @@ public class customerpage extends AppCompatActivity {
 
                 table_user.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    //if (snapshot.child(editTextTextPhoneNumber.getText().toString()).exists()) {
-                      //  mDialog.dismiss();
-
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot.child(editTextTextPhoneNumber.getText().toString()).exists()) {
+                        mDialog.dismiss();
                         User user = snapshot.child(editTextTextPhoneNumber.getText().toString()).getValue(User.class);
-                        if (user.getPassword().equals(editTextTextPassword.getText().toString()))
-                        {
+                        if (user.getPassword().equals(editTextTextPassword.getText().toString())) {
                             Toast.makeText(customerpage.this, "Sing In Success", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(customerpage.this, customerMainPage.class);
                             startActivity(intent);
+                        } else {
+                            Toast.makeText(customerpage.this, "Wrong Password!!", Toast.LENGTH_SHORT).show();
                         }
-                        else
-                        {
-                            Toast.makeText(customerpage.this, "Sing In Fail!!", Toast.LENGTH_SHORT).show();
-                        }
-                   // } else
-                   // {
-                     //   Toast.makeText(customerpage.this, "User not exit in the System", Toast.LENGTH_SHORT).show();
-                   // }
-
+                    }
+                    else
+                    {
+                        mDialog.dismiss();
+                        Toast.makeText(customerpage.this, "User Not Available !!!", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override
