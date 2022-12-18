@@ -31,11 +31,6 @@ android {
 
 dependencies {
 
-    implementation "com.google.firebase:firebase-core:21.1.1"
-    implementation "com.google.firebase:firebase-database:20.1.0"
-    implementation "info.hoang8f:fbutton:1.0.5"
-    implementation "com.rengwuxian.materialedittext:library:2.1.4"
-
     implementation platform('com.google.firebase:firebase-bom:31.1.1')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'androidx.appcompat:appcompat:1.5.1'
@@ -44,6 +39,12 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+
+    implementation "com.google.firebase:firebase-core:21.1.1"
+    implementation "com.google.firebase:firebase-database:20.1.0"
+    implementation "info.hoang8f:fbutton:1.0.5"
+    implementation "com.rengwuxian.materialedittext:library:2.1.4"
+
 
 
 }

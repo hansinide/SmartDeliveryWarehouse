@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.smartdeliverywarehouse.Model.User;
+import com.google.android.gms.common.SignInButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +32,6 @@ public class customerpageSingup extends AppCompatActivity {
         editTextTextPersonName= (EditText) findViewById(R.id.editTextTextPersonName);
         editTextTextPassword= (EditText) findViewById(R.id.editTextTextPassword);
 
-
         FirebaseDatabase database= FirebaseDatabase.getInstance();
         DatabaseReference table_user= database.getReference("User");
 
@@ -42,6 +43,14 @@ public class customerpageSingup extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         User user =  snapshot.child(editTextTextPhoneNumber.getText().toString()).getValue(User.class);
+                        if(user.getPassword().equals(editTextTextPassword.getText().toString()))
+                        {
+                            Toast.makeText(customerpageSingup.this, "Sing In Success", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(customerpageSingup.this, "Sing In Fail!!", Toast.LENGTH_SHORT).show();
+                        }
 
                     }
 
