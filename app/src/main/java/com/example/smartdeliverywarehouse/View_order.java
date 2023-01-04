@@ -55,7 +55,7 @@ public class View_order extends AppCompatActivity {
         });
 
         // NFC Implementation
-        //editMessage = findViewById(R.id.editMessage); //NFC data write part
+        editMessage = findViewById(R.id.editMessage); //NFC data write part
         nfcContent = findViewById(R.id.nfcContent);
         activateButton = findViewById(R.id.updateStock);
         context = this;
@@ -67,7 +67,7 @@ public class View_order extends AppCompatActivity {
                         if (myTag== null){
                             Toast.makeText(context, Error_Detected,Toast.LENGTH_LONG).show();
                         }else{
-                            write("PlainText | "+ editMessage.getText().toString(),myTag);
+                            write(" | "+ editMessage.getText().toString(),myTag);
                             Toast.makeText(context, Write_Success,Toast.LENGTH_LONG).show();
                         }
                     }catch(IOException e){
@@ -123,7 +123,7 @@ public class View_order extends AppCompatActivity {
             Log.e("UnsupportedEncoding",e.toString());
         }
 
-        nfcContent.setText("NFC Content " +text);
+        nfcContent.setText("ORDER " +text);
     }
     private void write (String text, Tag tag) throws IOException, FormatException {
         NdefRecord[] records = { createRecord(text)};
