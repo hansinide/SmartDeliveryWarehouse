@@ -1,4 +1,25 @@
 <resources>
     <string name="app_name">Smart Delivery Warehouse</string>
     <string name="customer">Customer</string>
+    <string name="Col1">Item List</string>
+    <string name="Col2">Count</string>
+    <string name="Col3">Location</string>
+
+    <string name="Row1">Milk</string>
+    <string name="Row11">3</string>
+    <string name="Row111">Shelf A</string>
+
+    <string name="Row2">Eggs</string>
+    <string name="Row22">2</string>
+    <string name="Row222">Shelf C</string>
+
+    <string name="Row3">Juice</string>
+    <string name="Row33">3</string>
+    <string name="Row333">Shelf B</string>
+
+    <string name="Row4">Milk</string>
+    <string name="Row44">3</string>
+    <string name="Row444">Shelf A</string>
+
+
 </resources>
