@@ -32,6 +32,8 @@ public class customerpage extends AppCompatActivity {
         editTextTextPhoneNumber=(MaterialEditText)findViewById(R.id.userPhoneNumber);
         editTextTextPassword= (MaterialEditText)findViewById(R.id.editPassword);
 
+
+
         final FirebaseDatabase database= FirebaseDatabase.getInstance();
         final DatabaseReference table_user= database.getReference("User");
 

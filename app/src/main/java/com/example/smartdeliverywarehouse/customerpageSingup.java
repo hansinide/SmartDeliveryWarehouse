@@ -70,7 +70,5 @@ public class customerpageSingup extends AppCompatActivity {
 
             }
         });
-
-
-
-        }}
+    }
+}

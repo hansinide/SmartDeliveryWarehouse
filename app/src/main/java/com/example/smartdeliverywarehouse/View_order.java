@@ -1,5 +1,6 @@
 package com.example.smartdeliverywarehouse;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.PendingIntent;
@@ -17,17 +18,31 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.rengwuxian.materialedittext.MaterialEditText;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class View_order extends AppCompatActivity {
 
     public static final String Error_Detected ="No NFC Tag Detected";
     public static final String Write_Success ="Item added Successfully";
     public static final String Write_Error ="Error while adding the Item";
+
+
     NfcAdapter nfcAdapter;
     PendingIntent pendingIntent;
     IntentFilter[] writingTagFilters;
@@ -36,8 +51,12 @@ public class View_order extends AppCompatActivity {
     Context context;
 
     TextView editMessage;
+    EditText item;
     TextView nfcContent;
     Button activateButton;
+    FirebaseFirestore db;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +73,12 @@ public class View_order extends AppCompatActivity {
             }
         });
 
+        item =findViewById(R.id.item);
         // NFC Implementation
         editMessage = findViewById(R.id.editMessage); //NFC data write part
         nfcContent = findViewById(R.id.nfcContent);
         activateButton = findViewById(R.id.updateStock);
+
         context = this;
 
             activateButton.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +90,43 @@ public class View_order extends AppCompatActivity {
                         }else{
                             write(" | "+ editMessage.getText().toString(),myTag);
                             Toast.makeText(context, Write_Success,Toast.LENGTH_LONG).show();
+                            db = FirebaseFirestore.getInstance();
+                            //int dbcount=10;
+                            //int ncount = Integer.valueOf(editMessage.getText().toString());
+
+
+                            //Map<String,Object> dbcount= new HashMap<>();
+                            //dbcount.get(count);
+
+
+                            Map<String,Object> itemdetails= new HashMap<>();
+                           // itemdetails.put("Count",count);
+                           // int count= ncount-dbcount;
+                            db.collection("View_order")
+                                    .whereEqualTo("Item_Name", item)
+                                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful() && !task.getResult().isEmpty())
+                                            {
+                                                DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                                                String documentId= documentSnapshot.getId();
+                                                db.collection("View_order")
+                                                        .document(documentId)
+                                                        .update(itemdetails)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void unused)
+                                                            {
+                                                                Toast.makeText(View_order.this, "update Success", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+
+                                            }
+                                        }
+                                    });
+
+
                         }
                     }catch(IOException e){
                         Toast.makeText(context, Write_Error,Toast.LENGTH_LONG).show();
@@ -79,6 +137,8 @@ public class View_order extends AppCompatActivity {
                     }
                 }
             });
+
+
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null){
             Toast.makeText(this, "This device does not support NFC TEC", Toast.LENGTH_SHORT).show();
@@ -189,6 +249,11 @@ public class View_order extends AppCompatActivity {
     public void WriteModeOff(){
         writeMode = false;
         nfcAdapter.disableForegroundDispatch(this);
+
+    }
+    public void Updatedata(String item, int count){
+        // DocumentReference docRef= FirebaseFirestore.getInstance().collection("View_order").document("GMHg2cFQljs70XpNb2KZ");
+        //docRef.get().addOnCanceledListener(new OnCompleteListener<>())
 
     }
 

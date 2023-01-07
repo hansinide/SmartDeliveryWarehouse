@@ -28,6 +28,7 @@ public class User {
         return Password;
     }
 
-    public void setPassword(String password) { Password = password;
+    public void setPassword(String password) {
+        Password = password;
     }
 }
