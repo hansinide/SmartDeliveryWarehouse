@@ -20,13 +20,20 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.smartdeliverywarehouse.Model.View_orderDB;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+
+
 
 public class View_order extends AppCompatActivity {
 
     public static final String Error_Detected ="No NFC Tag Detected";
     public static final String Write_Success ="Item added Successfully";
+    public static final String DB_Success ="Item count Updated ";
     public static final String Write_Error ="Error while adding the Item";
     NfcAdapter nfcAdapter;
     PendingIntent pendingIntent;
@@ -36,6 +43,7 @@ public class View_order extends AppCompatActivity {
     Context context;
 
     TextView editMessage;
+    TextView itemDB;
     TextView nfcContent;
     Button activateButton;
 
@@ -44,7 +52,10 @@ public class View_order extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acitivity_view_order);
 
+
+
         Button buttonBack = findViewById(R.id.buttonBack);
+
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,8 +67,10 @@ public class View_order extends AppCompatActivity {
 
         // NFC Implementation
         editMessage = findViewById(R.id.editMessage); //NFC data write part
+        itemDB = findViewById(R.id.item);
         nfcContent = findViewById(R.id.nfcContent);
         activateButton = findViewById(R.id.updateStock);
+
         context = this;
 
             activateButton.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +82,25 @@ public class View_order extends AppCompatActivity {
                         }else{
                             write(" | "+ editMessage.getText().toString(),myTag);
                             Toast.makeText(context, Write_Success,Toast.LENGTH_LONG).show();
+
+                            //Add data
+                            String count = editMessage.getText().toString().trim();
+                            String item = itemDB.getText().toString().trim();
+                            View_orderDB obj = new View_orderDB(count,item);
+
+                            Log.d("count","count of item");
+                            Log.d("count",count);
+
+
+                            FirebaseDatabase dataB= FirebaseDatabase.getInstance();
+                            DatabaseReference myRef= dataB.getReference("View_order");
+                            myRef.setValue(obj);
+                            editMessage.setText("");
+                            itemDB.setText("");
+                            Toast.makeText(context, DB_Success,Toast.LENGTH_LONG).show();
+
+
+
                         }
                     }catch(IOException e){
                         Toast.makeText(context, Write_Error,Toast.LENGTH_LONG).show();
