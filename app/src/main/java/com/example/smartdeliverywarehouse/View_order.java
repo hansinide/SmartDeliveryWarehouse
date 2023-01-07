@@ -32,8 +32,8 @@ import java.io.UnsupportedEncodingException;
 public class View_order extends AppCompatActivity {
 
     public static final String Error_Detected ="No NFC Tag Detected";
-    public static final String Write_Success ="Item added Successfully";
-    public static final String DB_Success ="Item count Updated ";
+    public static final String Write_Success ="Shelf Count Successfully Updated";
+    public static final String DB_Success ="Item DB count Updated ";
     public static final String Write_Error ="Error while adding the Item";
     NfcAdapter nfcAdapter;
     PendingIntent pendingIntent;
@@ -83,7 +83,7 @@ public class View_order extends AppCompatActivity {
                             write(" | "+ editMessage.getText().toString(),myTag);
                             Toast.makeText(context, Write_Success,Toast.LENGTH_LONG).show();
 
-                            //Add data
+                            //Add data to the DB
                             String count = editMessage.getText().toString().trim();
                             String item = itemDB.getText().toString().trim();
                             View_orderDB obj = new View_orderDB(count,item);
@@ -94,7 +94,7 @@ public class View_order extends AppCompatActivity {
 
                             FirebaseDatabase dataB= FirebaseDatabase.getInstance();
                             DatabaseReference myRef= dataB.getReference("View_order");
-                            myRef.setValue(obj);
+                            myRef.child(item).setValue(obj);
                             editMessage.setText("");
                             itemDB.setText("");
                             Toast.makeText(context, DB_Success,Toast.LENGTH_LONG).show();
@@ -155,7 +155,7 @@ public class View_order extends AppCompatActivity {
             Log.e("UnsupportedEncoding",e.toString());
         }
 
-        nfcContent.setText("ORDER " +text);
+        nfcContent.setText("Shelf Count " +text);
     }
     private void write (String text, Tag tag) throws IOException, FormatException {
         NdefRecord[] records = { createRecord(text)};
