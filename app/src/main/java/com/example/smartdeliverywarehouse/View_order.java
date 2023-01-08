@@ -1,5 +1,6 @@
 package com.example.smartdeliverywarehouse;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.PendingIntent;
@@ -21,6 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smartdeliverywarehouse.Model.View_orderDB;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -35,6 +39,9 @@ public class View_order extends AppCompatActivity {
     public static final String Write_Success ="Shelf Count Successfully Updated";
     public static final String DB_Success ="Item DB count Updated ";
     public static final String Write_Error ="Error while adding the Item";
+
+    public static final String Null_Item ="Enter an Item";
+
     NfcAdapter nfcAdapter;
     PendingIntent pendingIntent;
     IntentFilter[] writingTagFilters;
@@ -47,6 +54,8 @@ public class View_order extends AppCompatActivity {
     TextView nfcContent;
     Button activateButton;
 
+    DatabaseReference reference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +64,8 @@ public class View_order extends AppCompatActivity {
 
 
         Button buttonBack = findViewById(R.id.buttonBack);
+
+
 
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -88,9 +99,7 @@ public class View_order extends AppCompatActivity {
                             String item = itemDB.getText().toString().trim();
                             View_orderDB obj = new View_orderDB(count,item);
 
-                            Log.d("count","count of item");
-                            Log.d("count",count);
-
+                            int itemCount = Integer.parseInt(count);
 
                             FirebaseDatabase dataB= FirebaseDatabase.getInstance();
                             DatabaseReference myRef= dataB.getReference("View_order");
@@ -99,8 +108,13 @@ public class View_order extends AppCompatActivity {
                             itemDB.setText("");
                             Toast.makeText(context, DB_Success,Toast.LENGTH_LONG).show();
 
+                            if (!item.isEmpty()){
 
+                                readData(item,itemCount);
+                            }else{
 
+                                Toast.makeText(context,Null_Item,Toast.LENGTH_LONG).show();
+                            }
                         }
                     }catch(IOException e){
                         Toast.makeText(context, Write_Error,Toast.LENGTH_LONG).show();
@@ -122,6 +136,45 @@ public class View_order extends AppCompatActivity {
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
         writingTagFilters = new IntentFilter[] {tagDetected};
     }
+    private void readData(String item, int itemCount) {
+
+        reference = FirebaseDatabase.getInstance().getReference("View_order");
+        reference.child(item).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+
+                if (task.isSuccessful()){
+
+                    if (task.getResult().exists()){
+
+                        Toast.makeText(context,"Successfully Read",Toast.LENGTH_LONG).show();
+                        DataSnapshot dataSnapshot = task.getResult();
+                        String item = String.valueOf(dataSnapshot.child("item").getValue());
+                        String count = String.valueOf(dataSnapshot.child("count").getValue());
+
+                        itemDB.setText(item);
+                        editMessage.setText(count);
+                        int DBCount = Integer.valueOf(count);
+                        int cal = DBCount -itemCount ;
+
+                    }else {
+
+                        Toast.makeText(context,"User Doesn't Exist",Toast.LENGTH_LONG).show();
+
+                    }
+
+
+                }else {
+
+                    Toast.makeText(context,"Failed to read",Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+    }
+
+
     private void readFromIntent(Intent intent){
         String action = intent.getAction();
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
